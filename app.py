@@ -32,8 +32,6 @@ def pickles_from_blob(connection_string, container_name):
                 df = pickle.load(blob_stream)
                 data_frames.append(df)
 
-                blob_client.close()
-
         if data_frames:
             concatenated_df = pd.concat(data_frames, ignore_index=True)
         else:
