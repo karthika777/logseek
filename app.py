@@ -1,3 +1,4 @@
+import os
 import gradio as gr
 from azure.storage.blob import BlobServiceClient
 from llama_index.experimental.query_engine import PandasQueryEngine
@@ -151,3 +152,7 @@ interface = gr.ChatInterface(
 )
 
 interface.launch()
+
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 8000))  
+    iface.launch(server_name="0.0.0.0", server_port=port)
