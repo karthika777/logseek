@@ -136,7 +136,7 @@ def query_model(prompt):
     
     return output
 
-def gradio_interface(query,history):
+def gradio_interface(query, history):
     output = query_model(query)
     words = output.split()
     ans = ""
@@ -145,14 +145,14 @@ def gradio_interface(query,history):
         time.sleep(0.1)
         yield ans
 
-interface = gr.ChatInterface(
+interface = gr.Interface(
     fn=gradio_interface,  
+    inputs=["text", "state"], 
+    outputs=["text"],  
     title="LogSeek - AI", 
     description="Your personal log assistant bot."
 )
 
-interface.launch()
-
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8000))  
-    iface.launch(server_name="0.0.0.0", server_port=port)
+    interface.launch(server_name="0.0.0.0", server_port=port)
