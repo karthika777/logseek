@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'codincity-logseek01'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BAD40E603A6C4551A2DAA7BAE3B342EC }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_916B5A153E914C318220AB3745C11840 }}
