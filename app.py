@@ -2,7 +2,7 @@ import gradio as gr
 from azure.storage.blob import BlobServiceClient
 from llama_index.experimental.query_engine import PandasQueryEngine
 from llama_index.core import Settings
-from llama_index.llms.azure_openai import AzureOpenAI
+from llama_index.llms.azure_openai import AzureOpenAI 
 from guardrails import Guard
 from guardrails.hub import ProfanityFree
 import pickle
