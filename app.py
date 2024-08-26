@@ -1,4 +1,3 @@
-import os
 import gradio as gr
 from azure.storage.blob import BlobServiceClient
 from llama_index.experimental.query_engine import PandasQueryEngine
@@ -32,6 +31,8 @@ def pickles_from_blob(connection_string, container_name):
                 df = pickle.load(blob_stream)
                 data_frames.append(df)
 
+                blob_client.close()
+
         if data_frames:
             concatenated_df = pd.concat(data_frames, ignore_index=True)
         else:
@@ -48,7 +49,7 @@ def pickles_from_blob(connection_string, container_name):
 
     return concatenated_df
 
-connection_string = "DefaultEndpointsProtocol=https;AccountName=aimlloganalyticstest;AccountKey=ikPneEuYonwekpcNhuWK5bUHqr3Cc2jt4IgI0vX29PQqbAPeUN5UVsiCGrJXI6+7cB0ccL+durBq+ASt9LxRDQ==;EndpointSuffix=core.windows.net"
+connection_string = "DefaultEndpointsProtocol=https;AccountName=aimlloganalyticstestv1;AccountKey=8owjR6hmh9i1sb5tgntcOVhM7RDLFwMbXcFqyfTeHu2SAo3wcPkttKlhe4wdjN0Q9oQDkkixefhE+AStae87cQ==;EndpointSuffix=core.windows.net"
 container_name = "pickle-files"
 
 df_final = pickles_from_blob(connection_string, container_name)
@@ -134,7 +135,7 @@ def query_model(prompt):
     
     return output
 
-def gradio_interface(query, history):
+def gradio_interface(query,history):
     output = query_model(query)
     words = output.split()
     ans = ""
@@ -143,13 +144,13 @@ def gradio_interface(query, history):
         time.sleep(0.1)
         yield ans
 
-interface = gr.Interface(
+interface = gr.ChatInterface(
     fn=gradio_interface,  
-    inputs=["text", "state"], 
-    outputs=["text"],  
     title="LogSeek - AI", 
     description="Your personal log assistant bot."
 )
+
+interface.launch()
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8000))  
